@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exámen Modelo C</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+
+  <style>
+    body{
+        background-color: #E9EED9;
+        font-family: "PT Sans", sans-serif;
+        font-size: 18px;
+    }
+   #colorTabla{
+    color: #54473F;
+    font-size: 17px;
+   }
+    h3{
+        color: #54473F;
+        
+    }
+    .container-fluid {
+      margin-top: 20px;
+    }
+    .table thead {
+      background-color: #f8f9fa;
+    }
+    .reservas-lista .list-group-item {
+      background-color: #CBD2A4;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+<!-- container fluid para vista adaptable -->
+<div class="container-fluid"> 
+  <div class="row">
+    <!-- Columna Izquierda: Lista de Libros ------------------------------------>
+    <div class="col-md-6">
+      <h3>Libros Disponibles</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr id="colorTabla">
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>Año</th>
+            
+          </tr>
+        </thead>
+        <tbody id="libros-lista">
+          <!-- Filas de libros en tabla-->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Columna Derecha: Reserva de Libros ------------------------------------------>
+    <div class="col-md-6">
+      <h3>Reservar un Libro</h3>
+      <div class="form-group">
+        <label for="libro-seleccionado">Selecciona un libro:</label>
+        <select class="form-control" id="libro-seleccionado">
+          <!-- lista de libros para seleccionar-->
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="reservarLibro()">Reservar</button>
+
+      <h4 class="mt-4">Reservas Realizadas</h4>
+      <ul class="list-group reservas-lista mt-3" id="reservas-lista">
+        <!-- Reservas -->
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Array de libros -----------------------------------------
+  const libros = [
+    { titulo: "1984", autor: "George Orwell", genero: "Distopía", ano: 1949 },
+    { titulo: "Orgullo y Prejuicio", autor: "Jane Austen", genero: "Romance", ano: 1813 },
+    { titulo: "Cien años de soledad", autor: "Gabriel García Márquez", genero: "Realismo Mágico", ano: 1967 },
+    { titulo: "El Gran Gatsby", autor: "F. Scott Fitzgerald", genero: "Tragedia", ano: 1925 },
+    { titulo: "Matar a un ruiseñor", autor: "Harper Lee", genero: "Ficción", ano: 1960 },
+    { titulo: "El Señor de los Anillos", autor: "J.R Tolkien", genero: "Fantasía", ano: 1954 }
+  ];
+
+  // Funcion para cargar la lista de libros en la tabla y el selector
+  function cargarLibros() {
+    const librosLista = document.querySelector("#libros-lista");
+    const libroSeleccionado = document.querySelector("#libro-seleccionado");
+
+    librosLista.innerHTML = ''; // Limpia el contenido y espaciado
+    libroSeleccionado.innerHTML = ''; 
+
+    libros.forEach((libro, index) => {
+      // Agregar libro a la tabla
+      librosLista.innerHTML += `
+        <tr>
+          <td>${libro.titulo}</td>
+          <td>${libro.autor}</td>
+          <td>${libro.genero}</td>
+          <td>${libro.ano}</td>
+        </tr>
+      `;
+
+      // Agregar libro al selector
+      libroSeleccionado.innerHTML += `
+        <option value="${index}">${libro.titulo} - ${libro.autor}</option>
+      `;
+    });
+  }
+
+  // Función para reservar un libro
+  function reservarLibro() {
+    const libroSeleccionado = document.querySelector("#libro-seleccionado");
+    const reservasLista = document.querySelector("#reservas-lista");
+    const indiceLibro = libroSeleccionado.value;
+
+    
+      const libro = libros[indiceLibro];
+      const fechaReserva = new Date();
+      const fechaReservaStr = fechaReserva.toLocaleDateString() + " " + fechaReserva.toLocaleTimeString(); 
+      //****las funciones new Date ,tolocaldateString y tolocaltimestring las he buscado por internet para generar la fecha y hora y representarla en cadena*****
+
+      // Crear un nuevo libro para reservar:
+      reservasLista.innerHTML = `
+        <li class="list-group-item">
+          <strong>${libro.titulo}</strong> por ${libro.autor}<br>
+          <small>Reservado el: ${fechaReservaStr}</small>
+        </li>
+      ` + reservasLista.innerHTML; // añade la reserva al inicio de la lista
+    
+  }
+
+  // Llamar a cargarLibros
+  cargarLibros();
+</script>
+
+</body>
+</html>
