@@ -17,11 +17,11 @@
 
 
   <style>
-    body{
+  body{
         background-color: #E9EED9;
         font-family: "PT Sans", sans-serif;
         font-size: 18px;
-    }
+  }
    #colorTabla{
     color: #54473F;
     font-size: 17px;
@@ -92,7 +92,7 @@
         </select>
       </div>
       <button class="btn btn-primary" onclick="reservarLibro()">Reservar</button>
-
+      <!-- la funcion onclick reservarLibro() es llamada en vez de addventListenner -->
       <h4 class="mt-4">Reservas Realizadas</h4>
       <ul class="list-group reservas-lista mt-3" id="reservas-lista">
         <!-- Reservas -->
@@ -170,10 +170,17 @@
 //-----------------------------------------------------------------------------------------------------------------------------------
   // Funcion para cargar la lista de libros en la tabla y el selector
   function cargarLibros() {
+    //creamos las variables para el selector y la tabla
     const librosLista = document.querySelector("#libros-lista");
     const libroSeleccionado = document.querySelector("#libro-seleccionado");
 
-    librosLista.innerHTML = ''; // Limpia el contenido y espaciado
+    librosLista.innerHTML = ''; 
+    /* Limpia el contenido del elemento HTML al que hace referencia la variable libroseleccionado
+    por lo que: se selecciona un elemento HTML (select id="libro-seleccionado") y se establece su contenido HTML en una cadena vacía ('').
+    Al asignar una cadena vacía a su propiedad innerHTML, se elimina todo el contenido HTML que contenía anteriormente ese elemento.
+    
+    */
+    
     libroSeleccionado.innerHTML = ''; 
 
     libros.forEach((libro, index) => {
@@ -187,7 +194,8 @@
         </tr>
       `;
 
-      // Agregar libro al selector
+      // Agregar libro al selector| index es la posición del libro en el array libros
+      //Por lo que el value captura la posicion index y accede a la clave libro.titulo y libro.autor
       libroSeleccionado.innerHTML += `
         <option value="${index}">${libro.titulo} - ${libro.autor}</option>
       `;
@@ -200,9 +208,10 @@
     const libroSeleccionado = document.querySelector("#libro-seleccionado");
     const reservasLista = document.querySelector("#reservas-lista");
     const indiceLibro = libroSeleccionado.value;
-
-    
+    //Libroseleccionado accede al valor del libro seleccionado y lo almacena en la variable indiceLibro.
+    //reservasLista es la variable que almacena el elemento HTML que representa la lista de reservas.
       const libro = libros[indiceLibro];
+      //Libro es la variable que almacena el libro seleccionado del array libros.
       const fechaReserva = new Date();
       const fechaReservaStr = fechaReserva.toLocaleDateString() + " " + fechaReserva.toLocaleTimeString(); 
       //****las funciones new Date ,tolocaldateString y tolocaltimestring las he buscado por internet para generar la fecha y hora y representarla en cadena*****
@@ -215,6 +224,7 @@
         </li>
       ` + reservasLista.innerHTML; // añade la reserva al inicio de la lista
 
+
      // Mostrar imagen y sinopsis---------------------------------------------------------
       const imagenLibroDiv = document.querySelector(".imagenLibro");
       const sinopsisLibroDiv = document.querySelector(".sinopsisLibro");
@@ -225,7 +235,7 @@
 
   
 
-  // Llamar a cargarLibros
+  // cargar los libros en la tabla y el selector
   cargarLibros();
 </script>
 
