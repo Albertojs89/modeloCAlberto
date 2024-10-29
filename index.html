@@ -40,6 +40,23 @@
       background-color: #CBD2A4;
       border-radius: 5px;
     }
+      .imagenLibro img {
+      max-width: 300px;
+      height: auto;
+      border-radius: 10px;
+    }
+    #portadaTexto{
+      margin-top: 100px;
+      
+    }
+    .imagenSinopsis {
+      gap: 50px; /* Reduce la separación entre la imagen y la sinopsis */
+    }
+    .sinopsisLibro{
+      margin-right: 200px;
+      font-size: 20px;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -84,7 +101,7 @@
     
     <!-- bloque para imagen y sinopsis -->
     
-  <div class="container text-center">
+  <div id="portadaTexto" class="container text-center">
     <div class="row align-items-start">
       <div class="col imagenLibro">
         <!-- aqui va la imagen de portada -->
@@ -98,16 +115,59 @@
 </div>
 
 <script>
-  // Array de libros -----------------------------------------
-  const libros = [
-    { titulo: "1984", autor: "George Orwell", genero: "Distopía", ano: 1949 },
-    { titulo: "Orgullo y Prejuicio", autor: "Jane Austen", genero: "Romance", ano: 1813 },
-    { titulo: "Cien años de soledad", autor: "Gabriel García Márquez", genero: "Realismo Mágico", ano: 1967 },
-    { titulo: "El Gran Gatsby", autor: "F. Scott Fitzgerald", genero: "Tragedia", ano: 1925 },
-    { titulo: "Matar a un ruiseñor", autor: "Harper Lee", genero: "Ficción", ano: 1960 },
-    { titulo: "El Señor de los Anillos", autor: "J.R Tolkien", genero: "Fantasía", ano: 1954 }
+  // Array de libros ----------------------------------------------------------------------------------------------
+    const libros = [
+    { 
+      titulo: "1984", 
+      autor: "George Orwell", 
+      genero: "Distopía", 
+      ano: 1949, 
+      portada: "https://th.bing.com/th/id/OIP.8weipgxeZASSI2nt9APKNAAAAA?rs=1&pid=ImgDetMain",
+      sinopsis: "Una novela sobre un futuro distópico donde el Gran Hermano observa todo."
+    },
+    { 
+      titulo: "Orgullo y Prejuicio", 
+      autor: "Jane Austen", 
+      genero: "Romance", 
+      ano: 1813, 
+      portada: "https://mestasediciones.com/wp-content/uploads/2020/06/C60-Orgullo-y-prejuicio.jpg",
+      sinopsis: "Una historia de amor en la Inglaterra del siglo XIX, llena de orgullo y prejuicios."
+    },
+    { 
+      titulo: "Cien años de soledad", 
+      autor: "Gabriel García Márquez", 
+      genero: "Realismo Mágico", 
+      ano: 1967, 
+      portada: "https://imagessl6.casadellibro.com/a/l/t0/36/9788439733836.jpg",
+      sinopsis: "La saga de la familia Buendía en el mítico pueblo de Macondo."
+    },
+    { 
+      titulo: "El Gran Gatsby", 
+      autor: "F. Scott Fitzgerald", 
+      genero: "Tragedia", 
+      ano: 1925, 
+      portada: "https://www.anagrama-ed.es/uploads/media/portadas/0001/15/b2834bc4ea71357c8b549dfccdd16d611c6586ea.jpeg",
+      sinopsis: "La vida de Jay Gatsby y su amor por Daisy Buchanan en los años 20."
+    },
+    { 
+      titulo: "Matar a un ruiseñor", 
+      autor: "Harper Lee", 
+      genero: "Ficción", 
+      ano: 1960, 
+      portada: "https://http2.mlstatic.com/D_NQ_NP_992079-MLM47037519198_082021-F.jpg",
+      sinopsis: "Una historia sobre justicia racial en el sur de Estados Unidos."
+    },
+    {
+      titulo: "El Señor de los Anillos", 
+      autor: "J.R.Tolkien", 
+      genero: "Fantasía", 
+      ano: 1954, 
+      portada: "https://th.bing.com/th/id/OIP.09ewS42LCUHAmk8zt-ETUQHaK5?rs=1&pid=ImgDetMain",
+      sinopsis: "En un mundo al borde de la oscuridad, un humilde hobbit emprende un viaje imposible para destruir el Anillo Único, desafiando al mal y redescubriendo la esperanza en medio de la desesperación."
+    }
+    
   ];
-
+//-----------------------------------------------------------------------------------------------------------------------------------
   // Funcion para cargar la lista de libros en la tabla y el selector
   function cargarLibros() {
     const librosLista = document.querySelector("#libros-lista");
@@ -131,6 +191,7 @@
       libroSeleccionado.innerHTML += `
         <option value="${index}">${libro.titulo} - ${libro.autor}</option>
       `;
+      
     });
   }
 
@@ -153,8 +214,16 @@
           <small>Reservado el: ${fechaReservaStr}</small>
         </li>
       ` + reservasLista.innerHTML; // añade la reserva al inicio de la lista
-    
+
+     // Mostrar imagen y sinopsis---------------------------------------------------------
+      const imagenLibroDiv = document.querySelector(".imagenLibro");
+      const sinopsisLibroDiv = document.querySelector(".sinopsisLibro");
+
+      imagenLibroDiv.innerHTML = `<img src="${libro.portada}" alt="Portada de ${libro.titulo}" />`;
+      sinopsisLibroDiv.innerHTML = `<p>${libro.sinopsis}</p>`;
   }
+
+  
 
   // Llamar a cargarLibros
   cargarLibros();
